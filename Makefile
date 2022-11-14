@@ -64,7 +64,15 @@ symadd:
 	ln -s $(DESTLIB_DIR)/* $(SYM_DESTLIB_DIR)
 	ln -s $(DESTBIN_DIR)/* $(SYM_DESTBIN_DIR)
 
-uninstall:
+symdel:
+	for symlink in $(DESTBIN_DIR)/*; do \
+		rm -f $(SYM_DESTBIN_DIR)/$$(echo $$symlink | cut -d'/' -f7-;); \
+	done; \
+	for symlink in $(DESTLIB_DIR)/*; do \
+		rm -f $(SYM_DESTLIB_DIR)/$$(echo $$symlink | cut -d'/' -f7-;); \
+	done; \
+
+uninstall: symdel
 	rm -rf $(DESTDIR)
 
-.PHONY: clean purge fresh install uninstall symadd
+.PHONY: clean purge fresh install uninstall symadd symdel
