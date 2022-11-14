@@ -50,6 +50,7 @@ purge: clean
 	rmdir $(BIN_DIR)
 
 fresh: purge
+	$(MAKE)
 
 
 install:
